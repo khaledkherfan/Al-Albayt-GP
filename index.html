@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Play Zone - منصتك الرياضية</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="app">
+
+  <!-- ═══════════════════════════════════════════
+       TOAST
+  ═══════════════════════════════════════════ -->
+  <div id="toast"></div>
+
+  <!-- ═══════════════════════════════════════════
+       PAGE: LOGIN
+  ═══════════════════════════════════════════ -->
+  <div class="page active" id="page-login">
+    <div class="auth-bg">
+      <div class="float-balls" id="float-balls"></div>
+      <div class="auth-card">
+        <div class="logo"><span>▶</span> Play Zone</div>
+        <p class="auth-sub">منصتك الرياضية الأولى في الأردن</p>
+        <div class="input-group">
+          <label>البريد الإلكتروني</label>
+          <div class="input-wrapper">
+            <span class="input-icon">✉️</span>
+            <input type="email" id="login-email" class="input" placeholder="example@email.com" autocomplete="email" />
+          </div>
+        </div>
+        <div class="input-group">
+          <label>كلمة المرور</label>
+          <div class="input-wrapper">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="login-pass" class="input" placeholder="••••••••" autocomplete="current-password" />
+          </div>
+        </div>
+        <button class="btn-primary" onclick="handleLogin()">تسجيل الدخول</button>
+        <p class="auth-link">ليس لديك حساب؟ <span class="link-text" onclick="navigate('register')">إنشاء حساب جديد</span></p>
+        <div class="demo-hint" onclick="document.getElementById('login-email').value='demo@playzone.jo'; document.getElementById('login-pass').value='123456'">
+          💡 اضغط هنا للتجربة السريعة
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       PAGE: REGISTER
+  ═══════════════════════════════════════════ -->
+  <div class="page" id="page-register">
+    <div class="auth-bg">
+      <div class="auth-card">
+        <div class="logo"><span>▶</span> Play Zone</div>
+        <p class="auth-sub">إنشاء حساب جديد</p>
+        <div class="input-group">
+          <label>الاسم الكامل</label>
+          <input type="text" id="reg-name" placeholder="محمد أحمد الخالد" />
+        </div>
+        <div class="input-group">
+          <label>البريد الإلكتروني</label>
+          <input type="email" id="reg-email" placeholder="example@email.com" />
+        </div>
+        <div class="input-group">
+          <label>رقم الهاتف</label>
+          <input type="tel" id="reg-phone" placeholder="07X XXX XXXX" />
+        </div>
+        <div class="input-group">
+          <label>كلمة المرور</label>
+          <input type="password" id="reg-pass" placeholder="••••••••" />
+        </div>
+        <button class="btn-primary" onclick="handleRegister()">إنشاء الحساب</button>
+        <p class="auth-link">لديك حساب بالفعل؟ <span class="link-text" onclick="navigate('login')">تسجيل الدخول</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       PAGE: HOME
+  ═══════════════════════════════════════════ -->
+  <div class="page" id="page-home">
+    <nav class="nav">
+      <div class="logo"><span>▶</span> Play Zone</div>
+      <div class="nav-actions">
+        <span class="nav-icon" onclick="navigate('bookings')">📋</span>
+        <div class="avatar" id="home-avatar" onclick="navigate('profile')">أ</div>
+      </div>
+    </nav>
+
+    <div class="hero">
+      <h1 class="hero-title" id="hero-greeting">مرحباً 👋</h1>
+      <p class="hero-sub">احجز ملعبك المفضل بنقرة واحدة</p>
+      <div class="hero-stats">
+        <div class="stat-box"><span class="stat-num">50+</span><span class="stat-label">ملعب</span></div>
+        <div class="stat-box"><span class="stat-num">8</span><span class="stat-label">رياضة</span></div>
+        <div class="stat-box"><span class="stat-num">24/7</span><span class="stat-label">متاح</span></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="filter-row" id="filter-row"></div>
+      <h2 class="section-title">اختر رياضتك</h2>
+      <div class="sports-grid" id="sports-grid"></div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">حجوزاتك القادمة</h2>
+      <div id="home-bookings"></div>
+    </div>
+
+    <nav class="bottom-nav">
+      <button class="bnav-btn active" onclick="navigate('home')"><span>🏠</span><span>الرئيسية</span></button>
+      <button class="bnav-btn" onclick="navigate('bookings')"><span>📋</span><span>حجوزاتي</span></button>
+      <button class="bnav-btn" onclick="navigate('profile')"><span>👤</span><span>حسابي</span></button>
+    </nav>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       PAGE: BOOK (Wizard Step 1 - Date & Time)
+  ═══════════════════════════════════════════ -->
+  <div class="page" id="page-book">
+    <nav class="nav">
+      <button class="back-btn" onclick="navigate('home')">→</button>
+      <h1 class="nav-title" id="book-sport-title">حجز</h1>
+      <div style="width:36px"></div>
+    </nav>
+
+    <div class="wizard-steps">
+      <div class="wizard-step">
+        <div class="wizard-dot active" id="wdot-1">1</div>
+        <span class="wizard-label">الموعد</span>
+      </div>
+      <div class="wizard-step">
+        <div class="wizard-dot" id="wdot-2">2</div>
+        <span class="wizard-label">الملعب</span>
+      </div>
+      <div class="wizard-step">
+        <div class="wizard-dot" id="wdot-3">3</div>
+        <span class="wizard-label">الدفع</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">اختر التاريخ</h2>
+      <div class="date-row" id="date-row"></div>
+
+      <h2 class="section-title" style="margin-top:24px">اختر الوقت</h2>
+      <div class="time-grid" id="time-grid"></div>
+
+      <button class="btn-primary" id="btn-to-venues" onclick="goToVenues()" disabled>
+        التالي: اختر الملعب →
+      </button>
+    </div>
+
+    <nav class="bottom-nav">
+      <button class="bnav-btn" onclick="navigate('home')"><span>🏠</span><span>الرئيسية</span></button>
+      <button class="bnav-btn" onclick="navigate('bookings')"><span>📋</span><span>حجوزاتي</span></button>
+      <button class="bnav-btn" onclick="navigate('profile')"><span>👤</span><span>حسابي</span></button>
+    </nav>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       PAGE: VENUES
+  ═══════════════════════════════════════════ -->
+  <div class="page" id="page-venues">
+    <nav class="nav">
+      <button class="back-btn" onclick="navigate('book')">→</button>
+      <h1 class="nav-title">اختر الملعب</h1>
+      <div style="width:36px"></div>
+    </nav>
+
+    <div class="section">
+      <div class="location-banner">📍 عرض الملاعب القريبة من موقعك: عبدون، عمّان</div>
+      <div id="venues-list"></div>
+      <button class="btn-primary" id="btn-to-payment" onclick="goToPayment()" disabled>
+        التالي: الدفع →
+      </button>
+    </div>
+
+    <nav class="bottom-nav">
+      <button class="bnav-btn" onclick="navigate('home')"><span>🏠</span><span>الرئيسية</span></button>
+      <button class="bnav-btn" onclick="navigate('bookings')"><span>📋</span><span>حجوزاتي</span></button>
+      <button class="bnav-btn" onclick="navigate('profile')"><span>👤</span><span>حسابي</span></button>
+    </nav>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       PAGE: PAYMENT
+  ═══════════════════════════════════════════ -->
+  <div class="page" id="page-payment">
+    <nav class="nav">
+      <button class="back-btn" onclick="navigate('venues')">→</button>
+      <h1 class="nav-title">تأكيد الحجز</h1>
+      <div style="width:36px"></div>
+    </nav>
+
+    <div class="section">
+      <div class="summary-card" id="booking-summary"></div>
+
+      <h2 class="section-title">طريقة الدفع</h2>
+      <div id="pay-methods"></div>
+
+      <div class="card-form" id="card-form" style="display:none">
+        <input class="input" placeholder="رقم البطاقة  ****  ****  ****" />
+        <div style="display:flex;gap:8px">
+          <input class="input" style="flex:1" placeholder="MM/YY" />
+          <input class="input" style="flex:1" placeholder="CVV" />
+        </div>
+      </div>
+
+      <button class="btn-primary" id="btn-confirm" onclick="confirmBooking()">تأكيد الحجز ✓</button>
+    </div>
+
+    <nav class="bottom-nav">
+      <button class="bnav-btn" onclick="navigate('home')"><span>🏠</span><span>الرئيسية</span></button>
+      <button class="bnav-btn" onclick="navigate('bookings')"><span>📋</span><span>حجوزاتي</span></button>
+      <button class="bnav-btn" onclick="navigate('profile')"><span>👤</span><span>حسابي</span></button>
+    </nav>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       PAGE: TICKET
+  ═══════════════════════════════════════════ -->
+  <div class="page" id="page-ticket">
+    <nav class="nav">
+      <button class="back-btn" onclick="navigate('home')">🏠</button>
+      <h1 class="nav-title">تذكرة الحجز</h1>
+      <div style="width:36px"></div>
+    </nav>
+    <div class="ticket-container">
+      <div class="success-anim">🎉</div>
+      <h2 class="success-title">تم تأكيد حجزك!</h2>
+      <p class="success-sub">سنتواصل معك قبل الموعد بساعة</p>
+      <div class="ticket" id="ticket-card"></div>
+      <div class="delivery-banner">🚗 خدمة التوصيل متاحة من موقعك لباب الملعب</div>
+      <button class="btn-primary" onclick="navigate('home')">العودة للرئيسية</button>
+      <button class="btn-outline" style="margin-top:10px" onclick="navigate('bookings')">عرض حجوزاتي</button>
+    </div>
+    <nav class="bottom-nav">
+      <button class="bnav-btn" onclick="navigate('home')"><span>🏠</span><span>الرئيسية</span></button>
+      <button class="bnav-btn" onclick="navigate('bookings')"><span>📋</span><span>حجوزاتي</span></button>
+      <button class="bnav-btn" onclick="navigate('profile')"><span>👤</span><span>حسابي</span></button>
+    </nav>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       PAGE: BOOKINGS
+  ═══════════════════════════════════════════ -->
+  <div class="page" id="page-bookings">
+    <nav class="nav">
+      <button class="back-btn" onclick="navigate('home')">→</button>
+      <h1 class="nav-title">حجوزاتي</h1>
+      <div style="width:36px"></div>
+    </nav>
+    <div class="section">
+      <div class="tab-row">
+        <button class="tab-btn active" id="tab-upcoming" onclick="switchTab('upcoming')">القادمة</button>
+        <button class="tab-btn" id="tab-past" onclick="switchTab('past')">السابقة</button>
+      </div>
+      <div id="bookings-list"></div>
+    </div>
+    <nav class="bottom-nav">
+      <button class="bnav-btn" onclick="navigate('home')"><span>🏠</span><span>الرئيسية</span></button>
+      <button class="bnav-btn active" onclick="navigate('bookings')"><span>📋</span><span>حجوزاتي</span></button>
+      <button class="bnav-btn" onclick="navigate('profile')"><span>👤</span><span>حسابي</span></button>
+    </nav>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       PAGE: PROFILE
+  ═══════════════════════════════════════════ -->
+  <div class="page" id="page-profile">
+    <nav class="nav">
+      <button class="back-btn" onclick="navigate('home')">→</button>
+      <h1 class="nav-title">الملف الشخصي</h1>
+      <div style="width:36px"></div>
+    </nav>
+    <div class="section">
+      <div class="profile-header">
+        <div class="profile-avatar" id="profile-avatar">أ</div>
+        <h2 class="profile-name" id="profile-name">أحمد وليد</h2>
+        <p class="profile-email" id="profile-email">ahmed@playzone.jo</p>
+        <div class="profile-badge">⚽ رياضي نشط</div>
+      </div>
+      <div class="stats-row">
+        <div class="profile-stat"><span class="profile-stat-num">12</span><span class="profile-stat-label">حجز</span></div>
+        <div class="profile-stat"><span class="profile-stat-num">3</span><span class="profile-stat-label">رياضة</span></div>
+        <div class="profile-stat"><span class="profile-stat-num">4.9</span><span class="profile-stat-label">تقييمك</span></div>
+      </div>
+      <div id="profile-menu"></div>
+    </div>
+    <nav class="bottom-nav">
+      <button class="bnav-btn" onclick="navigate('home')"><span>🏠</span><span>الرئيسية</span></button>
+      <button class="bnav-btn" onclick="navigate('bookings')"><span>📋</span><span>حجوزاتي</span></button>
+      <button class="bnav-btn active" onclick="navigate('profile')"><span>👤</span><span>حسابي</span></button>
+    </nav>
+  </div>
+
+</div><!-- #app -->
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
